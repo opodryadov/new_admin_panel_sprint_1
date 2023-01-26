@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-24 12:50+0500\n"
+"POT-Creation-Date: 2023-01-26 22:49+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\movies\apps.py:8 .\movies\models.py:58
+#: .\movies\admin.py:39 .\movies\models.py:81
+msgid "movie genres"
+msgstr "movie genres"
+
+#: .\movies\apps.py:8 .\movies\models.py:51
 msgid "movies"
 msgstr "movies"
 
-#: .\movies\models.py:8 .\movies\models.py:64
+#: .\movies\models.py:8 .\movies\models.py:70
 msgid "created"
 msgstr "created"
 
@@ -30,70 +34,80 @@ msgstr "created"
 msgid "updated"
 msgstr "updated"
 
-#: .\movies\models.py:23
-msgid "name"
-msgstr "name"
-
-#: .\movies\models.py:24 .\movies\models.py:42
-msgid "description"
-msgstr "description"
-
-#: .\movies\models.py:31
-msgid "genre"
-msgstr "genre"
-
-#: .\movies\models.py:32
-msgid "genres"
-msgstr "genres"
-
-#: .\movies\models.py:36 .\movies\models.py:57
+#: .\movies\models.py:23 .\movies\models.py:50
 msgid "movie"
 msgstr "movie"
 
-#: .\movies\models.py:37
+#: .\movies\models.py:24
 msgid "tv_show"
 msgstr "tv_show"
 
-#: .\movies\models.py:41
+#: .\movies\models.py:28
+#, fuzzy
+#| msgid "actors"
+msgid "actor"
+msgstr "actors"
+
+#: .\movies\models.py:29
+msgid "director"
+msgstr "director"
+
+#: .\movies\models.py:30
+msgid "writer"
+msgstr "writer"
+
+#: .\movies\models.py:34
 msgid "title"
 msgstr "title"
 
-#: .\movies\models.py:43
+#: .\movies\models.py:35 .\movies\models.py:56
+msgid "description"
+msgstr "description"
+
+#: .\movies\models.py:36
 msgid "creation date"
 msgstr "creation date"
 
-#: .\movies\models.py:44
+#: .\movies\models.py:37
 msgid "file"
 msgstr "file"
 
-#: .\movies\models.py:46
-msgid "type"
-msgstr "type"
-
-#: .\movies\models.py:47
+#: .\movies\models.py:39
 msgid "rating"
 msgstr "rating"
 
-#: .\movies\models.py:68
+#: .\movies\models.py:42
+msgid "type"
+msgstr "type"
+
+#: .\movies\models.py:55
+msgid "name"
+msgstr "name"
+
+#: .\movies\models.py:63
+msgid "genre"
+msgstr "genre"
+
+#: .\movies\models.py:64
+msgid "genres"
+msgstr "genres"
+
+#: .\movies\models.py:80
 msgid "movie genre"
 msgstr "movie genre"
 
-#: .\movies\models.py:69
-msgid "movie genres"
-msgstr "movie genres"
-
-#: .\movies\models.py:80
+#: .\movies\models.py:92
 msgid "person"
 msgstr "person"
 
-#: .\movies\models.py:81
+#: .\movies\models.py:93
 msgid "persons"
 msgstr "persons"
 
-#: .\movies\models.py:87
+#: .\movies\models.py:99
 msgid "role"
 msgstr "role"
 
-#: .\movies\models.py:92
+#: .\movies\models.py:110
 msgid "actors"
 msgstr "actors"
