@@ -5,7 +5,7 @@ from dataclasses import asdict
 from contextlib import contextmanager
 
 import psycopg2
-from psycopg2.extras import DictCursor
+from psycopg2.extras import DictCursor, execute_batch
 from psycopg2.extensions import connection as _connection
 from dotenv import load_dotenv
 
@@ -54,17 +54,18 @@ class SQLiteExtractor:
 
     def extract_movies(self):
         try:
-            tables = [x[0] for x in self.curs.execute(
-                "SELECT name FROM sqlite_master WHERE type='table';"
-            ).fetchall()]
-            for table in tables:
-                raw_data = self.curs.execute(
-                    f'SELECT * FROM {table};'
-                ).fetchall()
-                for item in raw_data:
-                    self.data[table].append(
-                        asdict(TABLE_CLASSES[table](**item))
-                    )
+            for table in self.data.keys():
+                self.curs.execute(f'SELECT * FROM {table};')
+
+                while True:
+                    rows = self.curs.fetchmany(200)
+                    if not rows:
+                        break
+
+                    for item in rows:
+                        self.data[table].append(
+                            asdict(TABLE_CLASSES[table](**item))
+                        )
 
             self.curs.close()
             return self.data
@@ -84,10 +85,10 @@ class PostgresSaver:
                 for items in data[table]:
                     keys = ', '.join([str(x) for x in items.keys()])
                     s = f"{'%s, ' * (len(items.values()) - 1) + '%s'}"
-
-                    self.curs.execute(
+                    execute_batch(
+                        self.curs,
                         f'INSERT INTO content.{table} ({keys}) VALUES ({s});',
-                        tuple(list(items.values()))
+                        [tuple(list(items.values()))]
                     )
         except psycopg2.Error as err:
             logger.error(err)
