@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 from .models import Genre, Filmwork, GenreFilmwork, Person, PersonFilmwork
 
 
@@ -11,28 +12,35 @@ class GenreAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Filmwork)
-class FilmworkAdmin(admin.ModelAdmin):
-    inlines = (GenreFilmworkInline,)
-
-    list_display = (
-        'title', 'type', 'file_path', 'creation_date', 'rating', 'created_at',
-        'updated_at',
-    )
-
-    list_filter = ('type', 'creation_date', 'rating',)
-
-    search_fields = ('title', 'description', 'id',)
-
-
 class PersonFilmworkInline(admin.TabularInline):
     model = PersonFilmwork
+    autocomplete_fields = ['person']
+
+
+@admin.register(Filmwork)
+class FilmworkAdmin(admin.ModelAdmin):
+    inlines = (GenreFilmworkInline, PersonFilmworkInline)
+    list_display = ('title', 'type', 'creation_date', 'rating', 'get_genres',)
+    list_filter = ('type', 'creation_date', 'rating',)
+    search_fields = ('title', 'description', 'id',)
+    list_prefetch_related = ('genres',)
+
+    def get_queryset(self, request):
+        queryset = (
+            super()
+            .get_queryset(request)
+            .prefetch_related(*self.list_prefetch_related)
+        )
+        return queryset
+
+    def get_genres(self, obj):
+        return ','.join([genre.name for genre in obj.genres.all()])
+
+    get_genres.short_description = _('movie genres')
 
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
     inlines = (PersonFilmworkInline,)
-
     list_display = ('full_name',)
-
     search_fields = ('full_name',)
