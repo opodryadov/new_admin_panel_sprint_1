@@ -118,3 +118,5 @@ if __name__ == '__main__':
     with sqlite_conn_context(os.environ.get('DB_PATH')) as sqlite_conn,\
             psycopg2.connect(**DSL, cursor_factory=DictCursor) as pg_conn:
         load_from_sqlite(sqlite_conn, pg_conn)
+
+    pg_conn.close()
