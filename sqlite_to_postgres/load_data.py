@@ -1,4 +1,5 @@
 import os
+import logging
 import sqlite3
 from dataclasses import asdict
 from contextlib import contextmanager
@@ -13,6 +14,13 @@ from movie_classes import (
 )
 
 load_dotenv()
+
+logging.basicConfig(
+    format=os.environ.get('LOG_FORMAT'),
+    level=os.environ.get('LOG_LEVEL'),
+    filename='%s.log' % os.environ.get('APP_NAME')
+)
+logger = logging.getLogger(os.environ.get('APP_NAME'))
 
 
 DSL = {
@@ -60,8 +68,8 @@ class SQLiteExtractor:
 
             self.curs.close()
             return self.data
-        except sqlite3.Error:
-            print('Something wrong while reading SQLite')
+        except sqlite3.Error as err:
+            logger.error(err)
             return
 
 
@@ -81,8 +89,8 @@ class PostgresSaver:
                         f'INSERT INTO content.{table} ({keys}) VALUES ({s});',
                         tuple(list(items.values()))
                     )
-        except psycopg2.Error:
-            print('Something wrong while writing in Postgres')
+        except psycopg2.Error as err:
+            logger.error(err)
             return
 
 
