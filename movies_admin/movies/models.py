@@ -24,6 +24,12 @@ class FilmType(models.TextChoices):
     TV_SHOW = 'tv_show', _('tv_show')
 
 
+class RoleType(models.TextChoices):
+    ACTOR = 'actor', _('actor')
+    DIRECTOR = 'director', _('director')
+    WRITER = 'writer', _('writer')
+
+
 class Filmwork(UUIDMixin, TimeStampedMixin):
     title = models.CharField(_('title'), max_length=255)
     description = models.TextField(_('description'), null=True, blank=True)
@@ -90,7 +96,7 @@ class Person(UUIDMixin, TimeStampedMixin):
 class PersonFilmwork(UUIDMixin):
     film_work = models.ForeignKey(Filmwork, on_delete=models.CASCADE)
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
-    role = models.TextField(_('role'), null=True)
+    role = models.TextField(_('role'), null=True, choices=RoleType.choices)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
