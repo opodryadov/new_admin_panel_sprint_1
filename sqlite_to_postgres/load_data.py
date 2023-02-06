@@ -57,8 +57,7 @@ class SQLiteExtractor:
             for table in self.data.keys():
                 self.curs.execute(f'SELECT * FROM {table};')
 
-                while True:
-                    rows = self.curs.fetchmany(200)
+                while rows := self.curs.fetchmany(200):
                     if not rows:
                         break
 
